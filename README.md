@@ -1,3 +1,5 @@
+check
+
 Naturally, people (especially Americans) love to play the lottery. 
 In 2017, it was estimated the US spent roughly $75 billion on them alone. Yet, those of us who do not play understand the extremely low chances of winning, as a ticket holder is more likely to be struck by lightning and attacked by a shark (ON THE SAME DAY) then win a MegaMillion jackpot.
 
