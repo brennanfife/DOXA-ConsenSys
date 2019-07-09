@@ -18,26 +18,20 @@ contract PrizedLinkedContract {
 }
 
 /* contract PrizedLinkedContract {
+
     // VARIABLES
     address public owner;
     address[] public entrants;
     creationTime = now;
-
     mapping (address => uint) savings; // amount of each savings
     mapping (address => uint) entryMap; // list the number of entrants
-
     uint pool = 0; // pool size
     uint min = 10 finney; // 0.01 ether
 
     // EVENTS
-    // Event emitted when a saver dives into the pool
-    event splashDown(address indexed saver, uint deposit, uint total);
-
-    // Event emitted when a saver withdraws
-    event takeHome(address indexed saver, uint savings);
-
-    // How much someone is saving...?
-    event Saving(States state);
+    event splashDown(address indexed saver, uint deposit, uint total); // Emitted when a saver dives into the pool
+    event takeHome(address indexed saver, uint savings); // Emitted when a saver withdraws
+    event Saving(States state); // Emitted when someone requests to know how much someone is saving...?
 
     // MODIFIERS
     modifier isOwner {
@@ -45,12 +39,13 @@ contract PrizedLinkedContract {
         _;
     }
 
+    // CONSTRUCTOR
     constructor() public {
         owner = msg.sender;
-        //creationTime = now;
+        creationTime = now;
     }
 
-    //States of Contract:
+    // States of Contract:
         //isOpen: Accepting
         //payOut: Withdraw
 
@@ -59,9 +54,10 @@ contract PrizedLinkedContract {
         payOut     //1
     }
 
+    // FUNCTIONS
+
     // When a new saver joins the pool, saver can add to deposit during isOpen
     function addToPool() public payable atState(States.isOpen) {
-
         require(msg.value >= min, "Must submit at least the minimum amount");
         addEntrant(msg.sender);
         pool = pool + msg.value;
@@ -76,7 +72,7 @@ contract PrizedLinkedContract {
           entrants.push(entrant);
           entryMap[entrant] = entrants.length - 1;
         }
-        //Else: Already an active key
+        //else: Already an active key
     }
 
     function endPool() public isOwner {
