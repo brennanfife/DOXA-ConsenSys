@@ -1,12 +1,17 @@
 pragma solidity ^0.5.0;
 
-// import 'https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/math/SafeMath.sol';
-// Can also just create a safe math contract and import it
+// import 'https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/math/SafeMath.sol'; // Can also just create a safe math contract and import it
 // May use rhombus lighthouse here too
+// import "./UniformRandomNumber.sol";
 
 
 
-
+/**
+ * @title The PrizedLinkedContract.sol contract for DOXA
+ * @author Brennan Fife
+ * @notice ...
+ * @dev ...
+ */
 contract PrizedLinkedContract {
     // VARIABLES
     address public owner;
@@ -29,9 +34,9 @@ contract PrizedLinkedContract {
     uint min = 10 finney; // 0.01 ether
 
     // EVENTS
-    event splashDown(address indexed saver, uint deposit, uint total); // Emitted when a saver dives into the pool
-    event takeHome(address indexed saver, uint savings); // Emitted when a saver withdraws
-    event Saving(States state); // Emitted when someone requests to know how much someone is saving...?
+    event addedEntry(address indexed saver, uint deposit, uint total); // Emitted when a saver is added to the pool
+    event withdraw(address indexed saver, uint savings); // Emitted when a saver withdraws
+    event checkSavings(States state); // Emitted when someone requests to know how much someone is saving...?
 
     // MODIFIERS
     modifier isOwner {
@@ -62,7 +67,7 @@ contract PrizedLinkedContract {
         addEntrant(msg.sender);
         pool = pool + msg.value;
         savings[msg.sender] = savings[msg.sender] + msg.value;
-        emit splashDown(msg.sender, msg.value, savings[msg.sender]);
+        emit addedEntry(msg.sender, msg.value, savings[msg.sender]);
     }
 
     // Add an entrant to the pool
@@ -72,8 +77,10 @@ contract PrizedLinkedContract {
           entrants.push(entrant);
           entryMap[entrant] = entrants.length - 1;
         }
-        //else: Already an active key
+        //else
     }
+
+    function calcWinner() private view returns (address) {}
 
     function endPool() public isOwner {
         myEvent.isOpen = false;
