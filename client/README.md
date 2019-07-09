@@ -1,7 +1,5 @@
-Ongoing Thoughts/Fixes/Plans
-- Need to be able to purchase tickets
-- Need to pick a winner
-- Write tests
-- Comment
-- Explain vulnerabilities
-- Include Docker and Rhombus to generate random numbers. 
+Ongoing Thoughts/Fixes/Additions
+- Display current pool amount and user holdings
+- Include Docker for environment control 
+- Include Rhombus to generate random numbers. 
+- If time allows, include Coinbase Wallet, Compound + Dai
