@@ -12,7 +12,7 @@ Additions/Fixes to PrizedLinkedContracts.sol
     - setState (for testing)
     - Return state of pool
 
-A contract for the token (i.e. name, ticker, supply, etc.)
+A contract for the token (i.e. name, ticker, supply, etc.), importing OpenZep
 
 Separate contracts for a single pool instance vs a pool creator (i.e. setup). 
 

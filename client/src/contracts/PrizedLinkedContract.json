@@ -22,15 +22,15 @@
       "type": "constructor"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/brenfife/Desktop/the-doxa-project/doxa-react-box/contracts/PrizedLinkedContract.sol\":\"PrizedLinkedContract\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/brenfife/Desktop/the-doxa-project/doxa-react-box/contracts/PrizedLinkedContract.sol\":{\"keccak256\":\"0x559b17d6a62b3cc302153c423437876cdd76f914ef18fc4f0352bfad1731bd27\",\"urls\":[\"bzzr://323b01f88c80268207bd7c103469a79352c0d5140b76731a4dae4898d4cca93a\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b50336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060c68061005f6000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c80638da5cb5b14602d575b600080fd5b60336075565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff168156fea165627a7a723058207bb3455d94bf38419a1eb9035fa99a3f7979edbc4392d9df199ff8b5031ad1d00029",
-  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c80638da5cb5b14602d575b600080fd5b60336075565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff168156fea165627a7a723058207bb3455d94bf38419a1eb9035fa99a3f7979edbc4392d9df199ff8b5031ad1d00029",
-  "sourceMap": "234:157:1:-;;;333:56;8:9:-1;5:2;;;30:1;27;20:12;5:2;333:56:1;372:10;364:5;;:18;;;;;;;;;;;;;;;;;;234:157;;;;;;",
-  "deployedSourceMap": "234:157:1:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;234:157:1;;;;;;;;;;;;;;;;;;;287:20;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
-  "source": "pragma solidity ^0.5.0;\n\n// import 'https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/math/SafeMath.sol';\n// Can also just create a safe math contract and import it\n// May use rhombus lighthouse here too\n\n\n\n\ncontract PrizedLinkedContract {\n    // VARIABLES\n    address public owner;\n\n    // CONSTRUCTOR\n    constructor() public {\n        owner = msg.sender;\n    }\n}\n\n/* contract PrizedLinkedContract {\n    // VARIABLES\n    address public owner;\n    // address[] public entrants;\n    // creationTime = now;\n\n    mapping (address => uint) savings; // amount of each savings\n    mapping (address => uint) entryMap; // list the number of entrants\n\n    // pool size and minimum\n    uint pool = 0;\n    uint min = 10 finney; //0.01 ether\n\n    constructor() public {\n        owner = msg.sender;\n        //creationTime = now;\n    }\n\n    //States of Contract:\n    //PoolOpen: Accepting\n    //Saving: and Earning\n    //PayOut: Withdraw\n\n    enum States {\n        PoolOpen,  //0\n        Saving,    //1\n        PayOut     //2\n    }\n\n    // EVENTS\n    // Event emitted when a saver dives into the pool\n    event splashDown(address indexed saver, uint deposit, uint total);\n\n    // Event emitted when a saver withdraws\n    event takeHome(address indexed saver, uint savings);\n\n    event Saving(States state);\n\n\n    //When a new saver joins the pool\n    //Saver can add to deposit during PoolOpen\n    function addToPool() public payable atState(States.PoolOpen) {\n\n        require(msg.value >= min, \"Must submit at least the minimum amount\");\n        addEntrant(msg.sender);\n        pool = pool + msg.value;\n        savings[msg.sender] = savings[msg.sender] + msg.value;\n        emit splashDown(msg.sender, msg.value, savings[msg.sender]);\n    }\n\n    //Add entrant to pool\n    function addEntrant (address entrant) private {\n        if (savings[entrant] == 0) {\n          //Only add to potential winners if current balance 0\n          entrants.push(entrant);\n          entryMap[entrant] = entrants.length - 1;\n        }\n        //Else: Already an active key\n    }\n\n} */",
-  "sourcePath": "/Users/brenfife/Desktop/the-doxa-project/doxa-react-box/contracts/PrizedLinkedContract.sol",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"author\":\"Brennan Fife\",\"details\":\"...\",\"methods\":{},\"title\":\"The PrizedLinkedContract.sol contract for DOXA\"},\"userdoc\":{\"methods\":{},\"notice\":\"...\"}},\"settings\":{\"compilationTarget\":{\"/Users/brenfife/Desktop/the-doxa-project/contracts/PrizedLinkedContract.sol\":\"PrizedLinkedContract\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/brenfife/Desktop/the-doxa-project/contracts/PrizedLinkedContract.sol\":{\"keccak256\":\"0xa1112673a2f5253d97f1bc941e25ccb24fe2b2040d63cde0a043d855c043978a\",\"urls\":[\"bzzr://0b01850fe2191edf2b3261acd8a75ba47fb977b7779b2fc1ea91868f8d4426af\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060c68061005f6000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c80638da5cb5b14602d575b600080fd5b60336075565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff168156fea165627a7a72305820c53b25846df453287190ea42259d6a010dbb0a4c18221396b5db8b816e640bc30029",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c80638da5cb5b14602d575b600080fd5b60336075565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff168156fea165627a7a72305820c53b25846df453287190ea42259d6a010dbb0a4c18221396b5db8b816e640bc30029",
+  "sourceMap": "388:157:1:-;;;487:56;8:9:-1;5:2;;;30:1;27;20:12;5:2;487:56:1;526:10;518:5;;:18;;;;;;;;;;;;;;;;;;388:157;;;;;;",
+  "deployedSourceMap": "388:157:1:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;388:157:1;;;;;;;;;;;;;;;;;;;441:20;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
+  "source": "pragma solidity ^0.5.0;\n\n// import 'https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/math/SafeMath.sol'; // Can also just create a safe math contract and import it\n// May use rhombus lighthouse here too\n// import \"./UniformRandomNumber.sol\";\n\n\n\n/**\n * @title The PrizedLinkedContract.sol contract for DOXA\n * @author Brennan Fife\n * @notice ...\n * @dev ...\n */\ncontract PrizedLinkedContract {\n    // VARIABLES\n    address public owner;\n\n    // CONSTRUCTOR\n    constructor() public {\n        owner = msg.sender;\n    }\n}\n\n/* contract PrizedLinkedContract {\n\n    // VARIABLES\n    address public owner;\n    address[] public entrants;\n    creationTime = now;\n    mapping (address => uint) savings; // amount of each savings\n    mapping (address => uint) entryMap; // list the number of entrants\n    uint pool = 0; // pool size\n    uint min = 10 finney; // 0.01 ether\n\n    // EVENTS\n    event addedEntry(address indexed saver, uint deposit, uint total); // Emitted when a saver is added to the pool\n    event withdraw(address indexed saver, uint savings); // Emitted when a saver withdraws\n    event checkSavings(States state); // Emitted when someone requests to know how much someone is saving...?\n\n    // MODIFIERS\n    modifier isOwner {\n        require(owner == msg.sender, \"Caller is not owner\");\n        _;\n    }\n\n    // CONSTRUCTOR\n    constructor() public {\n        owner = msg.sender;\n        creationTime = now;\n    }\n\n    // States of Contract:\n        //isOpen: Accepting\n        //payOut: Withdraw\n\n    enum States {\n        isOpen,  //0\n        payOut     //1\n    }\n\n    // FUNCTIONS\n\n    // When a new saver joins the pool, saver can add to deposit during isOpen\n    function addToPool() public payable atState(States.isOpen) {\n        require(msg.value >= min, \"Must submit at least the minimum amount\");\n        addEntrant(msg.sender);\n        pool = pool + msg.value;\n        savings[msg.sender] = savings[msg.sender] + msg.value;\n        emit addedEntry(msg.sender, msg.value, savings[msg.sender]);\n    }\n\n    // Add an entrant to the pool\n    function addEntrant (address entrant) private {\n        if (savings[entrant] == 0) {\n          //Only add to potential winners if current balance 0\n          entrants.push(entrant);\n          entryMap[entrant] = entrants.length - 1;\n        }\n        //else\n    }\n\n    function calcWinner() private view returns (address) {}\n\n    function endPool() public isOwner {\n        myEvent.isOpen = false;\n        uint balanceTransfered = myEvent.sales * TICKET_PRICE;\n        owner.transfer(balanceTransfered);\n        emit LogEndSale(owner, balanceTransfered);\n    }\n\n} */",
+  "sourcePath": "/Users/brenfife/Desktop/the-doxa-project/contracts/PrizedLinkedContract.sol",
   "ast": {
-    "absolutePath": "/Users/brenfife/Desktop/the-doxa-project/doxa-react-box/contracts/PrizedLinkedContract.sol",
+    "absolutePath": "/Users/brenfife/Desktop/the-doxa-project/contracts/PrizedLinkedContract.sol",
     "exportedSymbols": {
       "PrizedLinkedContract": [
         70
@@ -54,7 +54,7 @@
         "baseContracts": [],
         "contractDependencies": [],
         "contractKind": "contract",
-        "documentation": null,
+        "documentation": "@title The PrizedLinkedContract.sol contract for DOXA\n@author Brennan Fife\n@notice ...\n@dev ...",
         "fullyImplemented": true,
         "id": 70,
         "linearizedBaseContracts": [
@@ -69,7 +69,7 @@
             "name": "owner",
             "nodeType": "VariableDeclaration",
             "scope": 70,
-            "src": "287:20:1",
+            "src": "441:20:1",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -80,7 +80,7 @@
               "id": 59,
               "name": "address",
               "nodeType": "ElementaryTypeName",
-              "src": "287:7:1",
+              "src": "441:7:1",
               "stateMutability": "nonpayable",
               "typeDescriptions": {
                 "typeIdentifier": "t_address",
@@ -94,7 +94,7 @@
             "body": {
               "id": 68,
               "nodeType": "Block",
-              "src": "354:35:1",
+              "src": "508:35:1",
               "statements": [
                 {
                   "expression": {
@@ -111,7 +111,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 60,
-                      "src": "364:5:1",
+                      "src": "518:5:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
@@ -128,7 +128,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 85,
-                        "src": "372:3:1",
+                        "src": "526:3:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
                           "typeString": "msg"
@@ -142,13 +142,13 @@
                       "memberName": "sender",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": null,
-                      "src": "372:10:1",
+                      "src": "526:10:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address_payable",
                         "typeString": "address payable"
                       }
                     },
-                    "src": "364:18:1",
+                    "src": "518:18:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -156,7 +156,7 @@
                   },
                   "id": 67,
                   "nodeType": "ExpressionStatement",
-                  "src": "364:18:1"
+                  "src": "518:18:1"
                 }
               ]
             },
@@ -171,29 +171,29 @@
               "id": 61,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "344:2:1"
+              "src": "498:2:1"
             },
             "returnParameters": {
               "id": 62,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "354:0:1"
+              "src": "508:0:1"
             },
             "scope": 70,
-            "src": "333:56:1",
+            "src": "487:56:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
         "scope": 71,
-        "src": "234:157:1"
+        "src": "388:157:1"
       }
     ],
-    "src": "0:2079:1"
+    "src": "0:2650:1"
   },
   "legacyAST": {
-    "absolutePath": "/Users/brenfife/Desktop/the-doxa-project/doxa-react-box/contracts/PrizedLinkedContract.sol",
+    "absolutePath": "/Users/brenfife/Desktop/the-doxa-project/contracts/PrizedLinkedContract.sol",
     "exportedSymbols": {
       "PrizedLinkedContract": [
         70
@@ -217,7 +217,7 @@
         "baseContracts": [],
         "contractDependencies": [],
         "contractKind": "contract",
-        "documentation": null,
+        "documentation": "@title The PrizedLinkedContract.sol contract for DOXA\n@author Brennan Fife\n@notice ...\n@dev ...",
         "fullyImplemented": true,
         "id": 70,
         "linearizedBaseContracts": [
@@ -232,7 +232,7 @@
             "name": "owner",
             "nodeType": "VariableDeclaration",
             "scope": 70,
-            "src": "287:20:1",
+            "src": "441:20:1",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -243,7 +243,7 @@
               "id": 59,
               "name": "address",
               "nodeType": "ElementaryTypeName",
-              "src": "287:7:1",
+              "src": "441:7:1",
               "stateMutability": "nonpayable",
               "typeDescriptions": {
                 "typeIdentifier": "t_address",
@@ -257,7 +257,7 @@
             "body": {
               "id": 68,
               "nodeType": "Block",
-              "src": "354:35:1",
+              "src": "508:35:1",
               "statements": [
                 {
                   "expression": {
@@ -274,7 +274,7 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 60,
-                      "src": "364:5:1",
+                      "src": "518:5:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
@@ -291,7 +291,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 85,
-                        "src": "372:3:1",
+                        "src": "526:3:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
                           "typeString": "msg"
@@ -305,13 +305,13 @@
                       "memberName": "sender",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": null,
-                      "src": "372:10:1",
+                      "src": "526:10:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address_payable",
                         "typeString": "address payable"
                       }
                     },
-                    "src": "364:18:1",
+                    "src": "518:18:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
@@ -319,7 +319,7 @@
                   },
                   "id": 67,
                   "nodeType": "ExpressionStatement",
-                  "src": "364:18:1"
+                  "src": "518:18:1"
                 }
               ]
             },
@@ -334,26 +334,26 @@
               "id": 61,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "344:2:1"
+              "src": "498:2:1"
             },
             "returnParameters": {
               "id": 62,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "354:0:1"
+              "src": "508:0:1"
             },
             "scope": 70,
-            "src": "333:56:1",
+            "src": "487:56:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
         "scope": 71,
-        "src": "234:157:1"
+        "src": "388:157:1"
       }
     ],
-    "src": "0:2079:1"
+    "src": "0:2650:1"
   },
   "compiler": {
     "name": "solc",
@@ -364,15 +364,19 @@
       "events": {},
       "links": {},
       "address": "0xa2Add253A9CCFdeBFd09d11496E334978fc4F1eb",
-      "transactionHash": "0x647867670fabdce0d8b7953281e85b7197be3e1c4f07a28437d560de71e5f0a1"
+      "transactionHash": "0x411fde97904167f82d895827d7cca899e4643723de446814235d98027a4da215"
     }
   },
   "schemaVersion": "3.0.11",
-  "updatedAt": "2019-07-09T17:49:50.490Z",
+  "updatedAt": "2019-07-11T17:16:08.928Z",
   "devdoc": {
-    "methods": {}
+    "author": "Brennan Fife",
+    "details": "...",
+    "methods": {},
+    "title": "The PrizedLinkedContract.sol contract for DOXA"
   },
   "userdoc": {
-    "methods": {}
+    "methods": {},
+    "notice": "..."
   }
 }
