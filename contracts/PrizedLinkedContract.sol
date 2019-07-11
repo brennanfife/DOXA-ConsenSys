@@ -1,8 +1,7 @@
 pragma solidity ^0.5.0;
 
-// import 'https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/math/SafeMath.sol'; // Can also just create a safe math contract and import it
-// May use rhombus lighthouse here too
-// import "./UniformRandomNumber.sol";
+import "./SafeMath.sol";
+import "./RandomNumberGenerator.sol";
 
 /**
  * @title The PrizedLinkedContract.sol contract for DOXA
@@ -12,22 +11,41 @@ pragma solidity ^0.5.0;
  */
 contract PrizedLinkedContract {
 
-    // VARIABLES
-    address public owner;
-    bool isOpen;
-    uint pool; // pool size, defaults to 0
-    uint MIN = 10 finney; // 0.01 ether
+    using SafeMath for uint;
+
+    address payable public owner;
+    uint pool; // pool size, WHICH defaults to 0
+    uint MIN_TICKET_PRICE = 10 finney; // MUST save at least 0.01 ether
     address[] public entrants;
     mapping (address => uint) savings; // amount of each savings
-    mapping (address => uint) entryMap; // list the number of entrants
-    //creationTime = now;
+    mapping (address => uint) entryMap; // list the map of entrants. Not safe...// struct? for entrant's address and savings amount... id number
+
+    bool isOpen;
+
+    //If we don't like using the bool isOpen...
+    //States of Contract:
+    //poolOpen: Accepting
+    //savingNow: and Earning
+    //payOut: Withdraw
+    /* enum States {
+        poolOpen,     //0
+        savingNow,    //1
+        payOut        //2
+    }*/
+
+    // ILighthouse public myLighthouse; // Lighthouse to obtain a random number
+    // using SafeMath for uint;
+    // ERC20 token;
+    // uint public creationTime;
 
 
     // EVENTS
+    event poolCreated(); // Emitted when a new pool is created. Should it contain the pool address?
     event addedEntry(address indexed saver, uint deposit, uint total); // Emitted when a saver is added to the pool
     event withdraw(address indexed saver, uint savings); // Emitted when a saver withdraws
-    event checkSavings(); // Emitted when someone requests to know how much someone is saving...?
+    event nextPoolPhase(); // or...
     event logEndSale();
+
 
 
     // MODIFIERS
@@ -37,34 +55,75 @@ contract PrizedLinkedContract {
     }
 
     modifier poolOpen {
-        require(isOpen == true, "Pool must be open to add participant");
+        require(isOpen == true, "Pool must be open");
         _;
     }
+
+    modifier minAmount {
+       require(msg.value >= MIN_TICKET_PRICE, "Must submit at least the minimum amount");
+       _;
+    }
+
+
 
     // CONSTRUCTOR
     constructor() public {
         owner = msg.sender;
         isOpen = true;
+        // Set a creationTime?
     }
 
+
+    // FUNCTIONS
     // When a new saver joins the pool, saver can add to deposit during isOpen
-    function addToPool() public payable poolOpen() {
-        require(msg.value >= MIN, "Must submit at least the minimum amount");
-        if (savings[msg.sender] == 0) { //Only add to potential winners if current balance 0
-          entrants.push(msg.sender);
-        }
+    function addToPool() public payable poolOpen() minAmount { //SHOULD THIS BE PRIVATE
+        if (savings[msg.sender] == 0) entrants.push(msg.sender); //Only add to potential winners if current balance 0
         pool = pool + msg.value;
         savings[msg.sender] = savings[msg.sender] + msg.value;
         emit addedEntry(msg.sender, msg.value, savings[msg.sender]);
     }
 
-    function calcWinner() private view returns (address) {} //declare winner here
+    function removeFromPool() public payable returns (address) {
 
-    function endPool() public {
-        require(winner != address(0), "Winner should be set before closing");
-        isOpen = false;
-        winner.transfer(pool);
-        emit LogEndSale(owner, );
     }
 
+    function viewDeposit() public view returns(uint) {
+        return(savings[msg.sender]);
+    }
+
+    function poolSize() public view returns(uint) {
+
+    }
+
+    function accrueInterest { // WOULD EVENTUALLY BE REPLACED BY COMPOUND + DAI
+
+    }
+
+    /**
+   * @param total The upper bound for the random number
+   * @return The random number
+   */
+    function selectRandom(uint256 total) internal view returns (uint256) { // WOULD EVENTUALLY BE REPLACED BY RHOMBUS
+        return RandomNumberGenerator.uniform(_entropy(), total);
+    }
+
+      /**
+   * @notice Computes the entropy used to generate the random number.
+   * The blockhash of the lock end block is XOR'd with the secret revealed by the owner.
+   * @return The computed entropy value
+   */
+    function _entropy() internal view returns (uint256) {
+        return uint256(blockhash(block.number - 1) ^ secret);
+    }
+
+    function chooseWinner() private view returns (address) {
+
+    }
+
+    function endPool() public {
+        require(winner != address(0), "Winner should be declared before closing");
+        isOpen = false;
+        winner.transfer(pool);
+        // emit LogEndSale();
+    }
 }
