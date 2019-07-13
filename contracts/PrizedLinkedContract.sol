@@ -19,8 +19,10 @@ contract PrizedLinkedContract {
     address[] public entrants;
     mapping (address => uint) savings; // amount of each savings
     mapping (address => uint) entryMap; // list the map of entrants. Not safe...// struct? for entrant's address and savings amount... id number
-
     bool isOpen;
+    uint creationTime; // current blocktime stamp
+    uint interestGenerated;
+    address winningAddress;
 
     //If we don't like using the bool isOpen...
     //States of Contract:
@@ -64,40 +66,37 @@ contract PrizedLinkedContract {
        _;
     }
 
+    modifier requiredTimePassed {
+        require((now - creationTime) > 4 weeks, "One month must have passed"); //4 weeks to simulate a month has passed
+        _;
+    }
+
 
 
     // CONSTRUCTOR
     constructor() public {
         owner = msg.sender;
         isOpen = true;
-        // Set a creationTime?
+        creationTime = now; // 'now' is changing every time a new block is created. Here it makes creationTime static to that current time.
     }
 
 
     // FUNCTIONS
     // When a new saver joins the pool, saver can add to deposit during isOpen
-    function addToPool() public payable poolOpen() minAmount { //SHOULD THIS BE PRIVATE
+    function addToPool() public payable poolOpen() minAmount { // SHOULD THIS BE public as anyone should be able to call it
         if (savings[msg.sender] == 0) entrants.push(msg.sender); //Only add to potential winners if current balance 0
         pool = pool + msg.value;
         savings[msg.sender] = savings[msg.sender] + msg.value;
         emit addedEntry(msg.sender, msg.value, savings[msg.sender]);
     }
 
-    function removeFromPool() public payable returns (address) {
-
-    }
+    function removeFromPool() public payable returns (address) {}
 
     function viewDeposit() public view returns(uint) {
         return(savings[msg.sender]);
     }
 
-    function poolSize() public view returns(uint) {
-
-    }
-
-    function accrueInterest { // WOULD EVENTUALLY BE REPLACED BY COMPOUND + DAI
-
-    }
+    function poolSize() public view returns(uint) {}
 
     /**
    * @param total The upper bound for the random number
@@ -117,13 +116,18 @@ contract PrizedLinkedContract {
     }
 
     function chooseWinner() private view returns (address) {
-
+        winningAddress = // logic generated from the randomNumberGen
     }
 
-    function endPool() public {
-        require(winner != address(0), "Winner should be declared before closing");
+    function closePool() public { // this should happen every 2 weeks
+        require((now - creationTime) > 2 weeks, "Two weeks must have passed");
         isOpen = false;
-        winner.transfer(pool);
+    }
+
+    function endPool() public requiredTimePassed {
+        require(winningAddress != address(0), "Winner should be declared before closing pool"); // Make sure the choose winner function has been called.
+        isOpen = false;
+        winningAddress.transfer(pool + (pool * 0.05)); // 5% interest rate hard coded
         // emit LogEndSale();
     }
 }

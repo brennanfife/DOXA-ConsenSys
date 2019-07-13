@@ -1,0 +1,4 @@
+- Circuit breaker to stop a contract (in case of emergency).
+- Upgradeability on randomNumber function... eventually pointing to Rhombus Lighthouse contract
+- Restricting contract access (e.g. ownable)
+- https://learn.consensys.net/unit/view/id:1971
