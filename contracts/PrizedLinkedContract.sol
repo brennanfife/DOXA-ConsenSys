@@ -82,13 +82,13 @@ contract PrizedLinkedContract {
     function poolSize() public view returns(uint) {}
 
     function selectRandom() internal view returns (uint256) { // WOULD EVENTUALLY BE REPLACED BY RHOMBUS
-        return uint256(blockhash(block.number - 1)); // blockhash is good enough for demo purposes.
+        return uint256(blockhash(block.number.sub(1))); // blockhash is good enough for demo purposes.
     }
 
     function chooseWinner() public returns (address) {
         require(isOpen == false, "Pool must be closed before selecting winner");
         uint randomNumber = selectRandom();
-        uint entrantsRandomIndex = randomNumber % entrants.length;
+        uint entrantsRandomIndex = randomNumber.mod(entrants.length); //SafeMath
         return winningAddress = entrants[entrantsRandomIndex];
     }
 
@@ -100,7 +100,7 @@ contract PrizedLinkedContract {
     function endPool() public requiredTimePassed {
         require(winningAddress != address(0), "Winner should be declared before closing pool"); // Requires chooseWinner has been called.
         isOpen = false;
-        winningAddress.transfer(pool + (pool / 20)); // 20 represents a 5% interest rate (hard coded)
+        winningAddress.transfer(pool.add(pool.div(20))); // 20 represents a 5% interest rate (hard coded)
         // emit LogEndPool();
     }
 }
