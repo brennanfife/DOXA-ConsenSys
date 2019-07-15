@@ -16,30 +16,13 @@ contract PrizedLinkedContract {
     address payable public owner;
     uint pool; // pool size, WHICH defaults to 0
     uint MIN_TICKET_PRICE = 10 finney; // MUST save at least 0.01 ether
-    address[] public entrants;
+    address payable[] public entrants;
     mapping (address => uint) savings; // amount of each savings
     mapping (address => uint) entryMap; // list the map of entrants. Not safe...// struct? for entrant's address and savings amount... id number
     bool isOpen;
     uint creationTime; // current blocktime stamp
     uint interestGenerated;
-    address winningAddress;
-
-    //If we don't like using the bool isOpen...
-    //States of Contract:
-    //poolOpen: Accepting
-    //savingNow: and Earning
-    //payOut: Withdraw
-    /* enum States {
-        poolOpen,     //0
-        savingNow,    //1
-        payOut        //2
-    }*/
-
-    // ILighthouse public myLighthouse; // Lighthouse to obtain a random number
-    // using SafeMath for uint;
-    // ERC20 token;
-    // uint public creationTime;
-
+    address payable winningAddress;
 
     // EVENTS
     event poolCreated(); // Emitted when a new pool is created. Should it contain the pool address?
@@ -67,7 +50,7 @@ contract PrizedLinkedContract {
     }
 
     modifier requiredTimePassed {
-        require((now - creationTime) > 4 weeks, "One month must have passed"); //4 weeks to simulate a month has passed
+        require((block.timestamp - creationTime) > 4 weeks, "One month must have passed"); //4 weeks to simulate a month has passed
         _;
     }
 
@@ -77,7 +60,7 @@ contract PrizedLinkedContract {
     constructor() public {
         owner = msg.sender;
         isOpen = true;
-        creationTime = now; // 'now' is changing every time a new block is created. Here it makes creationTime static to that current time.
+        creationTime = block.timestamp; // 'now' is changing every time a new block is created. Here it makes creationTime static to that current time.
     }
 
 
@@ -98,36 +81,26 @@ contract PrizedLinkedContract {
 
     function poolSize() public view returns(uint) {}
 
-    /**
-   * @param total The upper bound for the random number
-   * @return The random number
-   */
-    function selectRandom(uint256 total) internal view returns (uint256) { // WOULD EVENTUALLY BE REPLACED BY RHOMBUS
-        return RandomNumberGenerator.uniform(_entropy(), total);
+    function selectRandom() internal view returns (uint256) { // WOULD EVENTUALLY BE REPLACED BY RHOMBUS
+        return uint256(blockhash(block.number - 1)); // blockhash is good enough for demo purposes.
     }
 
-      /**
-   * @notice Computes the entropy used to generate the random number.
-   * The blockhash of the lock end block is XOR'd with the secret revealed by the owner.
-   * @return The computed entropy value
-   */
-    function _entropy() internal view returns (uint256) {
-        return uint256(blockhash(block.number - 1) ^ secret);
-    }
-
-    function chooseWinner() private view returns (address) {
-        winningAddress = // logic generated from the randomNumberGen
+    function chooseWinner() public returns (address) {
+        require(isOpen == false, "Pool must be closed before selecting winner");
+        uint randomNumber = selectRandom();
+        uint entrantsRandomIndex = randomNumber % entrants.length;
+        return winningAddress = entrants[entrantsRandomIndex];
     }
 
     function closePool() public { // this should happen every 2 weeks
-        require((now - creationTime) > 2 weeks, "Two weeks must have passed");
+        require((block.timestamp - creationTime) > 2 weeks, "Two weeks must have passed");
         isOpen = false;
     }
 
     function endPool() public requiredTimePassed {
-        require(winningAddress != address(0), "Winner should be declared before closing pool"); // Make sure the choose winner function has been called.
+        require(winningAddress != address(0), "Winner should be declared before closing pool"); // Requires chooseWinner has been called.
         isOpen = false;
-        winningAddress.transfer(pool + (pool * 0.05)); // 5% interest rate hard coded
-        // emit LogEndSale();
+        winningAddress.transfer(pool + (pool / 20)); // 20 represents a 5% interest rate (hard coded)
+        // emit LogEndPool();
     }
 }
