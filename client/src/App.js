@@ -28,7 +28,7 @@ class App extends Component {
       const deployedNetwork = PrizeLinkedContract.networks[networkId];
       const instance = new web3.eth.Contract(
         PrizeLinkedContract.abi,
-        deployedNetwork && deployedNetwork.address,
+        deployedNetwork && deployedNetwork.address, 
       );
 
       // Set web3, accounts, and contract to the state, and then proceed with an
