@@ -51,7 +51,7 @@ contract PrizedLinkedContract {
 
     modifier requiredTimePassed {
         require((block.timestamp - creationTime) > 4 weeks, "One month must have passed"); //4 weeks to simulate a month has passed
-        _; 
+        _;
     }
 
 
