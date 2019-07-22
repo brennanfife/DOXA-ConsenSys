@@ -10,9 +10,7 @@ import "./RandomNumberGenerator.sol";
  * @dev ...
  */
 contract PrizedLinkedContract {
-
     using SafeMath for uint;
-
     address payable public owner;
     uint pool; // pool size, WHICH defaults to 0
     uint MIN_TICKET_PRICE = 10 finney; // MUST save at least 0.01 ether

@@ -8,7 +8,7 @@ const MyButton = (props) => { // props come from Discount.js
         <Button
             href={props.link}
             variant="contained"
-            size="smal"
+            size="small"
             style={{
                 background: props.bck,
                 color: props.color
