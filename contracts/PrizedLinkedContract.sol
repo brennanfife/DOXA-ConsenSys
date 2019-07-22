@@ -73,13 +73,13 @@ contract PrizedLinkedContract {
         emit addedEntry(msg.sender, msg.value, savings[msg.sender]);
     }
 
-    function removeFromPool() public payable returns (address) {}
+    // function removeFromPool() public payable returns (address) {}
 
     function viewDeposit() public view returns(uint) {
         return(savings[msg.sender]);
     }
 
-    function poolSize() public view returns(uint) {}
+    // function poolSize() public view returns(uint) {}
 
     function selectRandom() internal view returns (uint256) { // WOULD EVENTUALLY BE REPLACED BY RHOMBUS
         return uint256(blockhash(block.number.sub(1))); // blockhash is good enough for demo purposes.
