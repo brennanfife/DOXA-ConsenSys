@@ -25,7 +25,10 @@ contract PrizedLinkedContract {
     uint public creationTime; // current blocktime stamp
     uint public interestGenerated;
     address payable public winningAddress;
-    bool public paused; //circuit breaker variable
+    bool public contractPaused = false; //circuit breaker variable
+
+
+
 
    /**
     * Emitted when a new pool is created. Should it contain the pool address?
@@ -64,6 +67,10 @@ contract PrizedLinkedContract {
     */
     event PoolClosed(uint winnings);
 
+
+
+
+
     modifier isOwner {
         require(owner == msg.sender, "Caller is not owner");
         _;
@@ -84,6 +91,16 @@ contract PrizedLinkedContract {
         _;
     }
 
+    // If the contract is paused, stop the modified function
+    modifier checkIfPaused() {
+        require(contractPaused == false, "Circuit breaker must be false");
+        _;
+    }
+
+
+
+
+
     constructor() public {
         owner = msg.sender;
         isOpen = true;
@@ -97,7 +114,7 @@ contract PrizedLinkedContract {
     * @dev The first require statement means to only add this entrant to potential winners if
     * their current balance 0.
     */
-    function addToPool() public payable poolOpen() minAmount {
+    function addToPool() public payable poolOpen() minAmount checkIfPaused {
         if (savings[msg.sender] == 0) entrants.push(msg.sender);
         pool = pool + msg.value;
         savings[msg.sender] = savings[msg.sender] + msg.value;
@@ -129,7 +146,7 @@ contract PrizedLinkedContract {
     * After pool is locked, the next two weeks will allow it to accrue interest.
     * @dev For testing purposes, the variable for the length of time will be changed.
     */
-    function lockPool() public {
+    function lockPool() public checkIfPaused {
         require((block.timestamp - creationTime) > 2 weeks, "Two weeks must have passed");
         isOpen = false;
         emit PoolLocked(block.timestamp, msg.sender); //since this function is public, anyone can call
@@ -140,7 +157,7 @@ contract PrizedLinkedContract {
     * It will make sure the current pool is locked.
     * @return The winning address selected.
     */
-    function chooseWinner() public returns (address) {
+    function chooseWinner() public checkIfPaused returns (address) {
         require(isOpen == false, "Pool must be locked before selecting winner");
         require(entrants.length >= 2, "There must be 2 or more players in the current pool");
         uint randomNumber = selectRandom();
@@ -168,17 +185,28 @@ contract PrizedLinkedContract {
     * Additionally, a new instance of the PrizedLinkedContract should be created to start up a new pool,
     * yet keeping the current savers in the pool.
     */
-    function closePool() public {
+    function closePool() public checkIfPaused {
         require(winningAddress != address(0), "Winner should be declared before closing pool");
         isOpen = false;
         winningAddress.transfer(savings[winningAddress].add(pool.div(20)));
         emit PoolClosed(pool.div(20));
     }
 
+
+
+
+
     /**
     * @notice This function is the fallback function.
     */
     function() external {
         revert("Fallback function called");
+    }
+
+    /**
+    * @notice This function is the circuit breaker function using a ternary.
+    */
+    function circuitBreaker() public isOwner {
+        contractPaused = (contractPaused == false) ? true : false;
     }
 }
