@@ -19,7 +19,7 @@ contract PrizedLinkedContract {
     uint public pool; // pool size, WHICH defaults to 0
     uint public MINIMUM_AMOUNT = 10 finney; // MUST save at least 0.01 ether
     address payable[] public entrants;
-    mapping (address => uint) private savings; // amount of each savings.
+    mapping (address => uint) public savings; // amount of each savings.
     mapping (address => uint) public entryMap; // list the map of entrants.
     bool public isOpen;
     uint public creationTime; // current blocktime stamp
@@ -196,12 +196,12 @@ contract PrizedLinkedContract {
 
 
 
-    /**
-    * @notice This function is the fallback function.
-    */
-    function() external {
-        revert("Fallback function called");
-    }
+    // /**
+    // * @notice This function is the fallback function.
+    // */
+    // function() external {
+    //     revert("Fallback function called");
+    // }
 
     /**
     * @notice This function is the circuit breaker function using a ternary.
