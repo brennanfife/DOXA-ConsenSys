@@ -5,8 +5,13 @@ import "./SafeMath.sol";
 /**
  * @title The PrizedLinkedContract.sol contract for DOXA
  * @author Brennan Fife
- * @notice ...
- * @dev ...
+ * @notice PrizedLinkedContract is the main contract for our system.
+ * Users will be able to save money every month, with each month raffling off the interest
+ * generated from the collective pool of savers.
+ * @dev This is the barebones for a prize-linked lottery system.
+ * Eventually, this contract would look to add additional features, including:
+ * Adding compadability with Coinbase Wallet, using Compound Finance for lending + Dai,
+ * and Rhombus Network to provide us with uniformly random numbers.
  */
 contract PrizedLinkedContract {
     using SafeMath for uint;
@@ -20,42 +25,44 @@ contract PrizedLinkedContract {
     uint public creationTime; // current blocktime stamp
     uint public interestGenerated;
     address payable public winningAddress;
+    bool public paused; //circuit breaker variable
 
    /**
     * Emitted when a new pool is created. Should it contain the pool address?
-    * param nameOfParam(s)
     */
-    event PoolCreated();
+    event PoolCreated(address creator);
 
    /**
     * Emitted when a saver is added to the pool
-    * param nameOfParam(s)
+    * @param saver The new saver added
+    * @param deposit The amount they deposit
+    * @param total The total they are currently saving
     */
-    event AddedEntry(address indexed saver, uint deposit, uint total);
+    event AddedEntry(address indexed saver, uint deposit, uint total, uint pool);
 
    /**
     * Emitted when an entrant withdraws from the pool
-    * param nameOfParam(s)
+    * @param saver The address of the saver who is withdrawing
+    * @param savings The amount that has been withdrawn
     */
     event Withdrawn(address indexed saver, uint savings);
 
    /**
     * Emitted when lockPool is called
-    * param nameOfParam(s)
     */
-    event PoolLocked();
+    event PoolLocked(uint timeLocked, address locker);
 
    /**
-    * Emitted when a winner is chosen
-    * param nameOfParam(s)
+    * Emitted when a winner is chosen.
+    * @param winner The reandomly selected winner
     */
-    event ChosenWinner();
+    event ChosenWinner(address indexed winner);
 
    /**
-    * Emitted when closePool is called
-    * param nameOfParam(s)
+    * Emitted when closePool is called.
+    * @param winnings The winner's lottery winning
     */
-    event PoolClosed();
+    event PoolClosed(uint winnings);
 
     modifier isOwner {
         require(owner == msg.sender, "Caller is not owner");
@@ -81,20 +88,20 @@ contract PrizedLinkedContract {
         owner = msg.sender;
         isOpen = true;
         creationTime = block.timestamp;
-        emit PoolCreated();
+        emit PoolCreated(owner);
     }
 
    /**
-    * @notice This function adds new entrants to the current pool. 
+    * @notice This function adds new entrants to the current pool.
     * An entrant can only join when the isOpen = true.
-    * @dev The first require statement means to only add this entrant to potential winners if 
+    * @dev The first require statement means to only add this entrant to potential winners if
     * their current balance 0.
     */
     function addToPool() public payable poolOpen() minAmount {
         if (savings[msg.sender] == 0) entrants.push(msg.sender);
         pool = pool + msg.value;
         savings[msg.sender] = savings[msg.sender] + msg.value;
-        emit AddedEntry(msg.sender, msg.value, savings[msg.sender]);
+        emit AddedEntry(msg.sender, msg.value, savings[msg.sender], pool);
     }
 
    /**
@@ -106,11 +113,15 @@ contract PrizedLinkedContract {
     }
 
    /**
-    * @notice This function allows users to withdraw their savings from the current pool
+    * @notice This function withdraws their savings from the current pool.
+    * @dev This function currently withdraws ALL of the user's savings balance.
     */
-    function withdraw() public {
-        !!!!!
-        emit Withdrawn(msg.sender, );
+    function withdrawAll() public {
+        require(savings[msg.sender] > 0, "Entrant has nothing to withdraw");
+        require(isOpen == true, "Pool not open");
+        msg.sender.transfer(savings[msg.sender]);
+        savings[msg.sender] = 0;
+        emit Withdrawn(msg.sender, savings[msg.sender]);
     }
 
    /**
@@ -118,23 +129,25 @@ contract PrizedLinkedContract {
     * After pool is locked, the next two weeks will allow it to accrue interest.
     * @dev For testing purposes, the variable for the length of time will be changed.
     */
-    function lockPool() public { 
+    function lockPool() public {
         require((block.timestamp - creationTime) > 2 weeks, "Two weeks must have passed");
         isOpen = false;
-        emit PoolLocked();
+        emit PoolLocked(block.timestamp, msg.sender); //since this function is public, anyone can call
     }
 
    /**
-    * @notice This function randomly chooses the winner from the current savers. 
+    * @notice This function randomly chooses the winner from the current savers.
     * It will make sure the current pool is locked.
     * @return The winning address selected.
     */
     function chooseWinner() public returns (address) {
         require(isOpen == false, "Pool must be locked before selecting winner");
+        require(entrants.length >= 2, "There must be 2 or more players in the current pool");
         uint randomNumber = selectRandom();
         uint entrantsRandomIndex = randomNumber.mod(entrants.length);
-        emit ChosenWinner();
-        return winningAddress = entrants[entrantsRandomIndex];
+        winningAddress = entrants[entrantsRandomIndex];
+        emit ChosenWinner(winningAddress);
+        return winningAddress;
     }
 
    /**
@@ -149,16 +162,23 @@ contract PrizedLinkedContract {
    /**
     * @notice This function closes the pool, simulating one month has passed.
     * A winner should have been chosen and they had the interest transfered to them.
-    * 20 represents a 5% interest rate from the entire pool. Here it is hard coded, but would be where a call to 
+    * 20 represents a 5% interest rate from the entire pool. Here it is hard coded, but would be where a call to
     * a Compound contract would make sense.
     * @dev Need to add the modifier requiredTimePassed to the end of the function header.
     * Additionally, a new instance of the PrizedLinkedContract should be created to start up a new pool,
     * yet keeping the current savers in the pool.
     */
-    function closePool() public { 
-        require(winningAddress != address(0), "Winner should be declared before closing pool"); 
+    function closePool() public {
+        require(winningAddress != address(0), "Winner should be declared before closing pool");
         isOpen = false;
         winningAddress.transfer(savings[winningAddress].add(pool.div(20)));
-        emit PoolClosed();
+        emit PoolClosed(pool.div(20));
+    }
+
+    /**
+    * @notice This function is the fallback function.
+    */
+    function() external {
+        revert("Fallback function called");
     }
 }
