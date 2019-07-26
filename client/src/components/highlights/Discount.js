@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Fade from 'react-reveal/Fade';
 import Slide from 'react-reveal/Slide';
-
-import MyButton from '../utils/MyButton';
+//import MyButton from '../utils/MyButton';
+import { Button } from 'rimble-ui';
 
 class Discount extends Component {
 
@@ -41,15 +41,10 @@ class Discount extends Component {
                     
                     <Slide right>
                         <div className="discount_description">
-                            <h3>Purchase before the next pool</h3>
+                            <h3>Save before the next pool</h3>
                             <p><strong>What are the chances of winning?</strong><br />
-                            Your chances of winning depends on how much you save/how many tickets are sold before the Pool locks. For example, if 1,000 savings tickets are sold before the Pool locks and you bought 100 tickets, your chances of winning would be 10%.</p>
-                            <MyButton
-                                text="Purchase tickets"
-                                bck="red"
-                                color="#ffffff"
-                                link="#"
-                            />
+                            Your chances depend on how much you save before the pool locks. For example, if 100 ETH is allocated in the pool before it locks, and you saved 10 ETH, your chances of winning would be 10%.</p>
+                            <Button variant="danger">Join This Pool!</Button>
                         </div>
                     </Slide>
                 </div>

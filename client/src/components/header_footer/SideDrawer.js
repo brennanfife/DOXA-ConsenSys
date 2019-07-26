@@ -14,7 +14,7 @@ const SideDrawer = (props) => {
         >
             <List component="nav">
                 <ListItem button>
-                    Buy Tickets
+                    Buy entries
                 </ListItem>
             </List>
         </Drawer>

@@ -8,7 +8,7 @@ const Featured = () => {
             <Carousel />
             <div className='artist_name'>
                 <div className='wrapper'>
-                    To Begin Click '+'
+                    Scroll ↓ to Begin
                 </div>
             </div>
             <Countdown />
