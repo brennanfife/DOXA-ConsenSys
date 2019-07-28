@@ -9,8 +9,8 @@ const DOXAFeatures = () => {
     return (
         <div className="bck_black"> 
             <div className="center_wrapper">
-                <div className="vn_wrapper"> {/** Provides the flexbox */}
-                    <Zoom duration={500}> {/** Provides the zoom animation */}
+                <div className="vn_wrapper"> 
+                    <Zoom duration={500}> 
                         <div className="vn_item">
                             <div className="vn_outer">
                                 <div className="vn_inner">
@@ -25,14 +25,14 @@ const DOXAFeatures = () => {
                                         Transparent
                                     </div>
                                     <div className="vn_desc">
-                                        Can be verified by anyone, anytime!
+                                        Can be verified by anyone, at anytime!
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </Zoom>
                     
-                    <Zoom duration={500} delay={500}> {/** Provides the zoom animation after the first zoom loads */}
+                    <Zoom duration={500} delay={500}> 
                         <div className="vn_item">
                             <div className="vn_outer">
                                 <div className="vn_inner">
@@ -54,7 +54,7 @@ const DOXAFeatures = () => {
                         </div>
                     </Zoom>
 
-                    <Zoom duration={500} delay={1000}> {/** Provides the zoom animation */}
+                    <Zoom duration={500} delay={1000}> 
                         <div className="vn_item">
                             <div className="vn_outer">
                                 <div className="vn_inner">

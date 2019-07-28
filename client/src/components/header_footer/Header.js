@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar'; //Allows us to add the logo
-import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
-
-import SideDrawer from './SideDrawer'
+//import IconButton from '@material-ui/core/IconButton';
+//import AddIcon from '@material-ui/icons/Add';
+// import SideDrawer from './SideDrawer'
 
 class Header extends Component {
 
     state = {
-        drawerOpen: false, // Initially, passing down to SideDrawer component
+        // drawerOpen: false, // Initially, passing down to SideDrawer component
         headerShow: false // Allows us to make a transparent nav background. Then on scroll it appears. Appears in ternary
     }
 
@@ -50,17 +49,17 @@ class Header extends Component {
                         <div className='font_righteous header_logo_doxa'>DOXA</div>
                         <div className='header_logo_title'>Prize-Linked Savings Accounts</div>
                     </div>
-                    <IconButton
+                    {/* <IconButton
                         aria-label='Add'
                         color='inherit'
                         onClick={() => this.toggleDrawer(true)}
                     >
                         <AddIcon />
-                    </IconButton>
-                    <SideDrawer 
+                    </IconButton> */}
+                    {/* <SideDrawer 
                         open={this.state.drawerOpen} // Now, to use this in SideDrawer, use 'props.open'
                         onClose={(value) => this.toggleDrawer(value)}
-                    />
+                    /> */}
                 </Toolbar>
             </AppBar>
         );

@@ -206,7 +206,7 @@ contract PrizedLinkedContract {
     /**
     * @notice This function is the circuit breaker function using a ternary.
     */
-    function circuitBreaker() public isOwner {
-        contractPaused = (contractPaused == false) ? true : false;
+    function togglePause() public isOwner {
+        contractPaused = !contractPaused;
     }
 }
