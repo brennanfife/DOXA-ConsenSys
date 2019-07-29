@@ -10,10 +10,11 @@ import Footer from './components/header_footer/Footer'
 
 import PrizeLinkedContract from "./contracts/PrizedLinkedContract.json";
 import getWeb3 from "./utils/getWeb3";
+//import { totalmem } from 'os';
 
 class App extends Component {
 
-  state = { storageValue: 0, web3: null, accounts: null, contract: null };
+  state = { storageValue: 0, web3: null, accounts: null, contract: null }; //!add 'poolSize: 0'
 
   componentDidMount = async () => {
     try {
@@ -42,6 +43,13 @@ class App extends Component {
       );
       console.error(error);
     }
+
+    // AddedEntry //!ADDED EVENT LISTNER!
+    // this.setState(poolSize => {
+    //   return {
+    //       poolSize: poolSize + total; // poolSize and total from PrizedLinkedContract
+    //   }
+    // })
   };
 
   render() {
@@ -49,6 +57,7 @@ class App extends Component {
       <div className="App" style={{ height: '1500px', background: 'black'}}>
         <Header />
         <Featured />
+        {/* <Featured /> !ADD poolSize={this.poolSize} */}
         <DOXAFeatures />
         <Highlight />
         <Savings />

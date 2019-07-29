@@ -29,11 +29,11 @@ class Header extends Component {
         }
     }
 
-    toggleDrawer = (value) => {
-        this.setState({
-            drawerOpen: value
-        })
-    }
+    // toggleDrawer = (value) => {
+    //     this.setState({
+    //         drawerOpen: value
+    //     })
+    // }
 
     render() {
         return (

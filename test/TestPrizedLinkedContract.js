@@ -7,40 +7,44 @@ contract("PrizedLinkedContract", accounts => {
         myContract =  await PrizedLinkedContract.new(); // new instance of PrizedLinkedContract contract
     });
 
-    //TODO: Test no one is in when contract is created
-    //!This test will only be checked for first month... After 2nd, 3rd, 4th, etc. It would change.
-    it('Test the pool initially returns zero once contract is created', async () => {
-        let poolSize = await myContract.pool 
+    //* Test no one is in our contract when it is initially created. 
+    //* This test should only be checked for first month... After 2nd, 3rd, 4th, etc. It would change.
+    it('Test the pool initially returns zero', async () => {
+        let poolSize = await myContract.pool() 
         assert.equal(poolSize, '0')
     })
 
-    //TODO: Test addToPool
-    it("Test addToPool", async () => {
-        let addedEntrant = await myContract.addToPool();
-        //assert.equal(, , "");
-    })
-
-    //TODO: Test viewDeposit
-    it("Test viewDeposit", async () => {
-        let initialDeposit = myContract.addToPool();
-        let viewedDeposit = await myContract.viewDeposit();
-        assert.equal(initialDeposit, viewedDeposit, "Correct deposit should be displayed");
-    })
-
-    //TODO: Test withdrawAll so entrants can withdrawl savings
-    it("Test withdrawAll", async () => {
-        let addedEntrant = await myContract.addToPool();
-        //assert.equal(, 0, "Entrant should have an account of 0");
-    })
-
-    //TODO: BELOW? HOW to test with address??
+    //* Test we don't automatically have a winner chosen.
     it('Test a winner isn\'t chosen until the pool ends', async () => {
-        assert.equal(await pool.winningAddress, '0x0000000000000000000000000000000000000000')
+        assert.equal(await myContract.winningAddress(), '0x0000000000000000000000000000000000000000')
     })
 
-    //TODO: Test that a winner has been chosen after endPool has been called. HOW to test with address??
+    //* Test viewDeposit is working so entrants can view their savings
+    it("Test viewDeposit", async () => {
+        let initialDeposit = "1000000000000000000"; //wei
+        await myContract.addToPool({from: accounts[0], value: initialDeposit});
+        let viewedDeposit = await myContract.viewDeposit();
+        assert.equal(initialDeposit, await viewedDeposit.toString(), "Correct deposit should be displayed");
+    })
+
+    //* Test withdrawAll is working so entrants can withdraw their savings
+    it("Test withdrawAll", async () => {
+        let initialDeposit = "1000000000000000000"; //wei
+        await myContract.addToPool({from: accounts[0], value: initialDeposit});
+        await myContract.withdrawAll({from: accounts[0]})
+        let viewedDeposit = await myContract.viewDeposit();
+        assert.equal(viewedDeposit, 0, "Entrant should have an account of 0");
+    })
+
+    //* Test that a winner has actually been chosen after endPool has been called. HOW to test with address??
     it("Test a winner has been chosen", async () => {
-        //address winningAddress = myContract.chooseWinner();
-        assert.notEqual(await pool.winningAddress, '0x0000000000000000000000000000000000000000')
+        let initialDeposit = "1000000000000000000"; //wei
+        await myContract.addToPool({from: accounts[0], value: initialDeposit});
+        await myContract.addToPool({from: accounts[1], value: initialDeposit});
+        await myContract.addToPool({from: accounts[2], value: initialDeposit});
+        await myContract.lockPool();
+        let winningAddress = await myContract.chooseWinner();
+        await myContract.closePool();
+        assert.notEqual(winningAddress, '0x0000000000000000000000000000000000000000')
     })
 });

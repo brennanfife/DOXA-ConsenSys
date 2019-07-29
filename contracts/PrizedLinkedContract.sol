@@ -39,8 +39,9 @@ contract PrizedLinkedContract {
     * @param saver The new saver added
     * @param deposit The amount they deposit
     * @param total The total they are currently saving
+    * @param poolSize The size of the pool pot
     */
-    event AddedEntry(address indexed saver, uint deposit, uint total, uint pool);
+    event AddedEntry(address indexed saver, uint deposit, uint total, uint poolSize);
 
    /**
     * Emitted when an entrant withdraws from the pool
@@ -113,7 +114,7 @@ contract PrizedLinkedContract {
     * @dev The first require statement means to only add this entrant to potential winners if
     * their current balance 0.
     */
-    function addToPool() public payable poolOpen() minAmount checkIfPaused {
+    function addToPool() public payable poolOpen minAmount checkIfPaused { // ..poolOpen()
         if (savings[msg.sender] == 0) entrants.push(msg.sender);
         pool = pool + msg.value;
         savings[msg.sender] = savings[msg.sender] + msg.value;
@@ -143,12 +144,12 @@ contract PrizedLinkedContract {
    /**
     * @notice This function locks the pool 2 weeks after it is created.
     * After pool is locked, the next two weeks will allow it to accrue interest.
-    * @dev For testing purposes, the variable for the length of time will be changed.
+    * @dev For testing purposes, the statement has been taken out.
     */
     function lockPool() public checkIfPaused {
-        require((block.timestamp - creationTime) > 2 weeks, "Two weeks must have passed");
+        //require((block.timestamp - creationTime) > 2 weeks, "Two weeks must have passed");
         isOpen = false;
-        emit PoolLocked(block.timestamp, msg.sender); //since this function is public, anyone can call
+        emit PoolLocked(block.timestamp, msg.sender);
     }
 
    /**
