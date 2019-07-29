@@ -10,6 +10,7 @@ const Featured = () => {
                 <div className='wrapper'>
                     Scroll ↓ to Begin
                 </div>
+                {/* <div>The stored value is: {this.props.pool}</div> */}
             </div>
             <Countdown />
         </div>

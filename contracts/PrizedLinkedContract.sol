@@ -15,19 +15,18 @@ import "./SafeMath.sol";
  */
 contract PrizedLinkedContract {
     using SafeMath for uint;
+
     address payable public owner;
     uint public pool; // pool size, WHICH defaults to 0
     uint public MINIMUM_AMOUNT = 10 finney; // MUST save at least 0.01 ether
     address payable[] public entrants;
     mapping (address => uint) public savings; // amount of each savings.
-    // mapping (address => uint) public entryMap; // list the map of entrants.
     bool public isOpen;
     uint public creationTime; // current blocktime stamp
-    uint public interestGenerated;
     address payable public winningAddress;
     bool public contractPaused = false; //circuit breaker variable
-
-
+    // uint public interestGenerated;
+    // mapping (address => uint) public entryMap; // list the map of entrants.
 
 
    /**

@@ -34,12 +34,12 @@ contract("PrizedLinkedContract", accounts => {
     })
 
     //TODO: BELOW? HOW to test with address??
-    it('Should not have a winner until the pool is complete', async () => {
+    it('Test a winner isn\'t chosen until the pool ends', async () => {
         assert.equal(await pool.winningAddress, '0x0000000000000000000000000000000000000000')
     })
 
     //TODO: Test that a winner has been chosen after endPool has been called. HOW to test with address??
-    it("There is a winner should be chosen", async () => {
+    it("Test a winner has been chosen", async () => {
         //address winningAddress = myContract.chooseWinner();
         assert.notEqual(await pool.winningAddress, '0x0000000000000000000000000000000000000000')
     })
