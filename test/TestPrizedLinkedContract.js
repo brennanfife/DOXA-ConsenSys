@@ -1,64 +1,46 @@
 const PrizedLinkedContract = artifacts.require("PrizedLinkedContract");
 
-contract("GetterSetter", accounts => {
+contract("PrizedLinkedContract", accounts => {
     let myContract;    
     
     before("Setup contract", async () => {
         myContract =  await PrizedLinkedContract.new(); // new instance of PrizedLinkedContract contract
     });
 
-    // let totalTransferredEther = 0;
-    // beforeEach("Get 1 ether before each test", async () => { // 'beforeEach' test before, then beforeEach > it
-    //     await myContract.sendTransaction({from: accounts[0], 
-    //         value:await web3.utils.toWei("1", "ether")});   //web3 is always available in truffle testing
-    //     totalTransferredEther++;
-    // });
+    //TODO: Test no one is in when contract is created
+    //!This test will only be checked for first month... After 2nd, 3rd, 4th, etc. It would change.
+    it('Test the pool initially returns zero once contract is created', async () => {
+        let poolSize = await myContract.pool 
+        assert.equal(poolSize, '0')
+    })
 
+    //TODO: Test addToPool
+    it("Test addToPool", async () => {
+        let addedEntrant = await myContract.addToPool();
+        //assert.equal(, , "");
+    })
+
+    //TODO: Test viewDeposit
     it("Test viewDeposit", async () => {
-        let storedMessage = await myContract.getMessage();
-        assert.equal(storedMessage, initialMessage, "Constructor and getMessage should match");
-    });
+        let initialDeposit = myContract.addToPool();
+        let viewedDeposit = await myContract.viewDeposit();
+        assert.equal(initialDeposit, viewedDeposit, "Correct deposit should be displayed");
+    })
 
-    it("Test initial message", async () => {
-        let storedMessage = await myContract.getMessage();
-        assert.equal(storedMessage, initialMessage, "Constructor and getMessage should match");
-    });
+    //TODO: Test withdrawAll so entrants can withdrawl savings
+    it("Test withdrawAll", async () => {
+        let addedEntrant = await myContract.addToPool();
+        //assert.equal(, 0, "Entrant should have an account of 0");
+    })
 
-    it("Test initial message", async () => {
-        let storedMessage = await myContract.getMessage();
-        assert.equal(storedMessage, initialMessage, "Constructor and getMessage should match");
-    });
+    //TODO: BELOW? HOW to test with address??
+    it('Should not have a winner until the pool is complete', async () => {
+        assert.equal(await pool.winningAddress, '0x0000000000000000000000000000000000000000')
+    })
 
-    it("Test initial message", async () => {
-        let storedMessage = await myContract.getMessage();
-        assert.equal(storedMessage, initialMessage, "Constructor and getMessage should match");
-    });
-
-    it("Test initial message", async () => {
-        let storedMessage = await myContract.getMessage();
-        assert.equal(storedMessage, initialMessage, "Constructor and getMessage should match");
-    });
-
-
-
-
-
-    // GetterSetter tests
-    it("Test initial message", async () => {
-        let storedMessage = await myContract.getMessage();
-        assert.equal(storedMessage, initialMessage, "Constructor and getMessage should match");
-    });
-
-    it("Test set and get message", async () => {
-        let newMessage = "New message";
-        await myContract.setMessage(newMessage);
-        let storedMessage = await myContract.getMessage();
-        assert.equal(newMessage, storedMessage, "setMessage and getMessage should match");
-    });
-
-    it("Test transfer ether", async () => {
-        let balance = await web3.eth.getBalance(myContract.address);
-        let totalTransferredWei = await web3.utils.toWei(totalTransferredEther.toString(), "ether");
-        assert.equal(balance, totalTransferredWei, "Total ether transferred and balance should match");
-    });
+    //TODO: Test that a winner has been chosen after endPool has been called. HOW to test with address??
+    it("There is a winner should be chosen", async () => {
+        //address winningAddress = myContract.chooseWinner();
+        assert.notEqual(await pool.winningAddress, '0x0000000000000000000000000000000000000000')
+    })
 });

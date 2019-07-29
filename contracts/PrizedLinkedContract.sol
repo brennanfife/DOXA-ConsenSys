@@ -20,7 +20,7 @@ contract PrizedLinkedContract {
     uint public MINIMUM_AMOUNT = 10 finney; // MUST save at least 0.01 ether
     address payable[] public entrants;
     mapping (address => uint) public savings; // amount of each savings.
-    mapping (address => uint) public entryMap; // list the map of entrants.
+    // mapping (address => uint) public entryMap; // list the map of entrants.
     bool public isOpen;
     uint public creationTime; // current blocktime stamp
     uint public interestGenerated;
