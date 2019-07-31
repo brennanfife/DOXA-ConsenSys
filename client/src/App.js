@@ -10,20 +10,17 @@ import Footer from './components/header_footer/Footer'
 
 import PrizeLinkedContract from "./contracts/PrizedLinkedContract.json";
 import getWeb3 from "./utils/getWeb3";
-//import { totalmem } from 'os';
 
 class App extends Component {
 
-  state = { storageValue: 0, web3: null, accounts: null, contract: null }; //!add 'poolSize: 0'
+  state = { web3: null, accounts: null, contract: null };
 
   componentDidMount = async () => {
     try {
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
-
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
-
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = PrizeLinkedContract.networks[networkId];
@@ -35,7 +32,7 @@ class App extends Component {
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
       this.setState({ web3, accounts, contract: instance });
-      console.log(instance);
+      //console.log(instance);
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -43,13 +40,6 @@ class App extends Component {
       );
       console.error(error);
     }
-
-    // AddedEntry //!ADDED EVENT LISTNER!
-    // this.setState(poolSize => {
-    //   return {
-    //       poolSize: poolSize + total; // poolSize and total from PrizedLinkedContract
-    //   }
-    // })
   };
 
   render() {
@@ -57,7 +47,6 @@ class App extends Component {
       <div className="App" style={{ height: '1500px', background: 'black'}}>
         <Header />
         <Featured />
-        {/* <Featured /> !ADD poolSize={this.poolSize} */}
         <DOXAFeatures />
         <Highlight />
         <Savings />

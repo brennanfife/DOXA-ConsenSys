@@ -13,10 +13,10 @@ class Discount extends Component {
     state = {
         discountStart: 0,
         discountEnd: 20,
-        storageValue: 0, //? Correct?
-        web3: null, //? Correct?
-        accounts: null, //? Correct?
-        contract: null//? Correct?
+        storageValue: 0, 
+        web3: null, 
+        accounts: null, 
+        contract: null
     }
 
     percentage = () => {
@@ -33,17 +33,6 @@ class Discount extends Component {
         },100) 
     }
 
-    //? ADDED LINES BELOW FROM TRUFFLE-BUTTON
-
-    async handleClick(event){
-        // const contract = this.state.contract
-        // const account = this.state.accounts[0]
-        // var value = 3
-        // await contract.methods.set(value).send({ from: account })
-        // const response = await contract.methods.get().call()
-        // console.log('response:', response)
-    }
-    //? ADDED LINES ABOVE FROM TRUFFLE-BUTTON
 
     render() {
         return (
@@ -68,10 +57,6 @@ class Discount extends Component {
                                 bck="red"
                                 color="#ffffff"
                             />
-
-                        {/* //! ADDED LINE BELOW FROM TRUFFLE-BUTTON
-                        <button onClick={this.handleClick.bind(this)}>Join Pool</button>
-                        //! ADDED LINE ABOVE FROM TRUFFLE-BUTTON */}
                         </div>
                     </Slide>
                 </div>

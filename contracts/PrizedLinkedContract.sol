@@ -192,10 +192,6 @@ contract PrizedLinkedContract {
         emit PoolClosed(pool.div(20));
     }
 
-
-
-
-
     // /**
     // * @notice This function is the fallback function.
     // */

@@ -10,9 +10,6 @@ const Featured = () => {
                 <div className='wrapper'>
                     Scroll ↓ to Begin
                 </div>
-                {/* //!Added Correctly?
-                <div>The current pool size is: {this.props.poolSize}</div>
-                console.log('poolSize:', poolSize) */}
             </div>
             <Countdown />
         </div>
