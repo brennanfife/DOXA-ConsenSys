@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity 0.5.8;
 
 import "./SafeMath.sol";
 
@@ -31,7 +31,7 @@ contract PrizedLinkedContract {
 
     // EVENTS
    /**
-    * Emitted when a new pool is created. Should it contain the pool address?
+    * Emitted when a new pool is created.
     */
     event PoolCreated(address creator);
 
@@ -53,6 +53,8 @@ contract PrizedLinkedContract {
 
    /**
     * Emitted when lockPool is called
+    * @param timeLocked When it was locked
+    * @param locker The caller that locked it
     */
     event PoolLocked(uint timeLocked, address locker);
 
@@ -109,7 +111,7 @@ contract PrizedLinkedContract {
     * @dev The first require statement means to only add this entrant to potential winners if
     * their current balance 0.
     */
-    function addToPool() public payable poolOpen minAmount checkIfPaused { // ..poolOpen()
+    function addToPool() public payable poolOpen minAmount checkIfPaused {
         if (savings[msg.sender] == 0) entrants.push(msg.sender);
         pool = pool + msg.value;
         savings[msg.sender] = savings[msg.sender] + msg.value;
@@ -120,7 +122,7 @@ contract PrizedLinkedContract {
     * @notice This function allows users to see how much is in their savings.
     * @return The savings of the user
     */
-    function viewDeposit() public view returns(uint) { // i.e. like a getDeposit
+    function viewDeposit() public view returns(uint) {
         return(savings[msg.sender]);
     }
 
@@ -139,7 +141,7 @@ contract PrizedLinkedContract {
    /**
     * @notice This function locks the pool 2 weeks after it is created.
     * After pool is locked, the next two weeks will allow it to accrue interest.
-    * @dev For testing purposes, the statement has been taken out.
+    * @dev For testing purposes, the require statement has been taken out.
     */
     function lockPool() public checkIfPaused {
         //require((block.timestamp - creationTime) > 2 weeks, "Two weeks must have passed");
@@ -186,7 +188,6 @@ contract PrizedLinkedContract {
         winningAddress.transfer(savings[winningAddress].add(pool.div(20)));
         emit PoolClosed(pool.div(20));
     }
-
 
     // /**
     // * @notice This function is the fallback function.
