@@ -10604,7 +10604,7 @@
     }
   },
   "schemaVersion": "3.0.11",
-  "updatedAt": "2019-08-01T04:06:51.811Z",
+  "updatedAt": "2019-08-01T04:33:50.327Z",
   "devdoc": {
     "author": "Brennan Fife",
     "details": "This is the barebones for a prize-linked lottery system. Eventually, this contract would look to add additional features, including: Adding compadability with Coinbase Wallet, using Compound Finance for lending + Dai, and Rhombus Network to provide us with uniformly random numbers.",

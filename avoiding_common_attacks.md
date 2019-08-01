@@ -8,7 +8,6 @@ Avoiding Common Attacks
 - [DoS](#dos)
 - [Additional Recommendations](#additional-recommendations)
     - [Explicit with function and variable visibility](#explicit-with-function-and-variable-visibility)
-    - [Using latest pragma possible](using-latest-pragma-possible)
 
 ## Integer Overflow and Underflow
 If particular variables reach above the maximum uint value (2^256), it will circle back to zero, causing a faulty in our code. The same is true for underflow. If a uint is made to be less than zero, it will cause underflow and get set to its maximum value.
@@ -28,5 +27,3 @@ With denial of service, there could be pieces of code that causes our contract t
 ## Additional Recommendations
 ### Explicit with function and variable visibility
 We include visibility in our variables, most of which should be public in our case.
-### Using latest pragma possible
-In PrizedLinkedContract, instead of using pragma solidity ^0.5.0, we use pragma solidity 0.5.8. As pointed out in [SmartDec](https://smartdec.net/), it is better to use the latest, specific versions of pragma for security purposes. At the time of this dApp, 0.5.10 is the latest version, but 0.5.8 is the most updated version which is compatible with Truffle.
