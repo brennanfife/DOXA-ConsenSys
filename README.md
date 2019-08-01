@@ -20,5 +20,5 @@ DOXA is a prized-linked savings account system. Instead of losing thousands on l
 Entrants will be incentivized to hold their money by playing small lottery games, which will ultimately raffle off the collective interest of the pool of accounts each month. The original principal will always remain with the users, while each month, a randomly selected address will receive the winning funds. Several technologies can be incorporated into later versions, including (but not limited to) Dai, Rhombus (uniform random number generator), and Compound (for generating interest).
 
 ### To run this
-This app hosts the landing page for DOXA. There is an additional file in this folder called 'doxa-gui'. This contains the same contracts and migrations, plus the actual GUI to interact with the contract and a truffle-config.js.
+This app hosts the landing page for DOXA. There is an additional file in this folder called 'doxa-the-gui.zip'. This contains the same contracts and migrations, plus the actual GUI to interact with the contract and a truffle-config.js.
 While the GUI may not be fully functional at the moment, one should still be able to compile, migrate, and test the contract without problem. Make sure you have truffle installed, running on port 7545. Check out the video link to see the contracts compiled, migrated, run in remix, and the beginnings of the GUI.
