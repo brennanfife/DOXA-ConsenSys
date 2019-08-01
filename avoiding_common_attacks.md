@@ -8,7 +8,6 @@ Avoiding Common Attacks
 - [DoS](#dos)
 - [Additional Recommendations](#additional-recommendations)
     - [Explicit with function and variable visibility](#explicit-with-function-and-variable-visibility)
-	- [Lock Pragmas](#lock-pragmas)
 
 ## Integer Overflow and Underflow
 If particular variables reach above the maximum uint value (2^256), it will circle back to zero, causing a faulty in our code. The same is true for underflow. If a uint is made to be less than zero, it will cause underflow and get set to its maximum value.
@@ -26,7 +25,5 @@ We can address reentrancy by adopting check-effect-interaction patterns. Includi
 With denial of service, there could be pieces of code that causes our contract to become unusable.  One is to know that we aren't looping in the contract, causing any unexpected revert. We can also use our fallback function (which is commented out as it is now automatically implemented in solidity 0.5.0) which will make sure we still have a running program, even if we call an incorrect function, specify the wrong parameters, etc. 
 
 ## Additional Recommendations
-### Lock pragmas
-As pointed out on [SmartDec](https://tool.smartdec.net/), we should lock the pragma into the lastest release of Solidity
 ### Explicit with function and variable visibility
 We include visibility in our variables, most of which should be public in our case.

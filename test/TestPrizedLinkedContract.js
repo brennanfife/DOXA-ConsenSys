@@ -3,7 +3,9 @@ const PrizedLinkedContract = artifacts.require("PrizedLinkedContract");
 /**
  * @author Brennan Fife
  * @ Test for PrizedLinkedContract
- * Set up myContract to use it before each test/
+ * Set up myContract to use it before each test
+ * Make sure when you are running test that your network ID specified in the truffle config 
+ * match he one returned by the network
  */
 contract("PrizedLinkedContract", accounts => {
     let myContract;    
