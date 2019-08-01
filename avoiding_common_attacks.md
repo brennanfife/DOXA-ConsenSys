@@ -1,18 +1,32 @@
-Integer Overflow and Underflow
-- If specific variables reaches above the maximum uint value (2^256), it will circle back to zero, causing a faulty in our code. The same is true for underflow. If a uint is made to be less than zero, it will cause an underflow and get set to its maximum value.
-- However, by using OpenZeppelin's SafeMath.sol, we are able to address this attack as it provides safety checks that will revert on error.
-- Note that it would be better to import this library directly from the GitHub repo (should any updates occur.
+Avoiding Common Attacks
+===
 
-Reentrancy
-- Addressed with push over pull
-- Making sure that we clear before sending a transaction.
+## Index
+- [Integer Overflow and Underflow](#integer-overflow-and-underflow)
+- [TimeStamp Dependence](#timestamp-dependence)
+- [Reentrancy](#reentrancy)
+- [DoS](#dos)
+- [Additional Recommendations](#additional-recommendations)
+    - [Explicit with function and variable visibility](#explicit-with-function-and-variable-visibility)
+	- [Lock Pragmas](#lock-pragmas)
 
-DoS
-- With denial of service, there will be a piece of code that causes our contract to become unusable. The is true in
-- Our fallback function (which is commented out as it is automatically implemented within 0.5.0) will make sure we can still have our contract working and reverts, even if we don't call an incorrect function, specify the wrong parameters, etc.
+## Integer Overflow and Underflow
+If particular variables reach above the maximum uint value (2^256), it will circle back to zero, causing a faulty in our code. The same is true for underflow. If a uint is made to be less than zero, it will cause underflow and get set to its maximum value.
+However, by using OpenZeppelin's SafeMath.sol library for uint, we can address this attack as it provides safety checks that will revert on error. Note that it could be better to import this library from a GitHub repo (should any updates occur.
 
-TimeStamp Dependence
-- We would want to make sure in future iterations of our contract that we DO NOT use 'now' or 'block.timestamp'
-- The reason is these have the potential to be manipulated by the miner. 
-- However, as long as we are not basing some critical/time-sensitive logic (within several minutes) on block.timestamp, we should be fine.
+## TimeStamp Dependence
+We would like to make sure in future iterations of our contract that we avoid using 'now' or 'block.timestamp'
+The reason is that these have the potential to be manipulated by the miner. 
+However, as long as we are aware that they exist, and are NOT basing some critical/time-sensitive logic (within several minutes)on them, which we aren't, we should be fine.
 
+## Reentrancy
+We can address reentrancy by adopting check-effect-interaction patterns. Including a check if the pool is open, or if the new entrant exists by checking the pool first before adding them as a new entrant.  
+
+## DoS
+With denial of service, there could be pieces of code that causes our contract to become unusable.  One is to know that we aren't looping in the contract, causing any unexpected revert. We can also use our fallback function (which is commented out as it is now automatically implemented in solidity 0.5.0) which will make sure we still have a running program, even if we call an incorrect function, specify the wrong parameters, etc. 
+
+## Additional Recommendations
+### Lock pragmas
+As pointed out on [SmartDec](https://tool.smartdec.net/), we should lock the pragma into the lastest release of Solidity
+### Explicit with function and variable visibility
+We include visibility in our variables, most of which should be public in our case.

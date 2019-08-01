@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity 0.5.10;
 
 import "./SafeMath.sol";
 
@@ -16,6 +16,7 @@ import "./SafeMath.sol";
 contract PrizedLinkedContract {
     using SafeMath for uint;
 
+    // GLOBAL VARIABLES
     address payable public owner;
     uint public pool; // pool size, WHICH defaults to 0
     uint public MINIMUM_AMOUNT = 10 finney; // MUST save at least 0.01 ether
@@ -28,7 +29,7 @@ contract PrizedLinkedContract {
     // uint public interestGenerated;
     // mapping (address => uint) public entryMap; // list the map of entrants.
 
-
+    // EVENTS
    /**
     * Emitted when a new pool is created. Should it contain the pool address?
     */
@@ -67,10 +68,7 @@ contract PrizedLinkedContract {
     */
     event PoolClosed(uint winnings);
 
-
-
-
-
+    // MODIFIERS
     modifier isOwner {
         require(owner == msg.sender, "Caller is not owner");
         _;
@@ -97,10 +95,7 @@ contract PrizedLinkedContract {
         _;
     }
 
-
-
-
-
+    // FUNCTIONS
     constructor() public {
         owner = msg.sender;
         isOpen = true;

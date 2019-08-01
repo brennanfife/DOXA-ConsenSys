@@ -53,7 +53,7 @@ class Discount extends Component {
                             <p><strong>What are the chances of winning?</strong><br />
                             Your chances depend on how much you save before the pool locks. For example, if 100 ETH is allocated in the pool before it locks, and you saved 10 ETH, your chances of winning would be 10%.</p>
                             <MyButton
-                                text="Join This Pool!"
+                                text="Check out the GUI!"
                                 bck="red"
                                 color="#ffffff"
                             />

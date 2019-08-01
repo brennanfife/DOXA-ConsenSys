@@ -1,5 +1,9 @@
-### [DOXA Version 0, ETHDenver 2019](https://github.com/brennanfife/DOXA-V0)
+---
+Title:  DOXA, the Prized-Linked Lottery System
+Author: Brennan Fife
+---
 
+## [DOXA Version 0, ETHDenver 2019](https://github.com/brennanfife/DOXA-V0)
 
 ### Backstory
 Naturally, people (especially Americans) love to play the lottery. 
